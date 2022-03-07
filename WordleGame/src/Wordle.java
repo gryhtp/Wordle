@@ -29,9 +29,12 @@ public class Wordle {
         //This will be the answer amount
         int wordNumber = 0;
         boolean isFoundAnswer = false;
+        boolean flag = true;
+        boolean isInDict;
 
         //This code only runs for 6 times for 6 inputs
-        for (int o = 0; o < 6; o++) {
+        while (flag){
+
             //Getting input from the user
             System.out.println("Please enter word " + (wordNumber + 1));
             String word = scanner.nextLine();
@@ -39,8 +42,21 @@ public class Wordle {
 
             //Making sure that the input is of length 5, if it is not the user will lose one turn
             if (word.length() != 5) {
-                System.out.println("The length of the word must be five! you lost this turn");
-                wordNumber++;
+                System.out.println("The length of the word must be five! enter the number again");
+                continue;
+            }
+
+            isInDict = false;
+
+            for (String string : words){
+                if (string.equals(word)){
+                    isInDict = true;
+                    break;
+                }
+            }
+
+            if (!isInDict){
+                System.out.println("Your word is not in the dictionary try another word");
                 continue;
             }
 
@@ -64,6 +80,9 @@ public class Wordle {
             compareLetters(word, answer);
 
             //Incrementing the answer amount
+            if (wordNumber == 5){
+                flag = false;
+            }
             wordNumber++;
         }
 
